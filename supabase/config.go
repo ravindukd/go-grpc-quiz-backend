@@ -2,10 +2,10 @@ package supabase
 
 import (
 	"github.com/supabase/supabase-go"
+	"os"
 )
 
-func InitializeSupabase() {
-	// Add Supabase configuration settings here
-	client := supabase.CreateClient("your-supabase-url", "your-supabase-key")
-	// Use the client for further operations
+func InitializeSupabase() *supabase.Client {
+	client := supabase.CreateClient(os.Getenv("SUPABASE_URL"), os.Getenv("SUPABASE_KEY"))
+	return client
 }

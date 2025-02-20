@@ -12,6 +12,7 @@ import (
 	"time"
 	"github.com/dgrijalva/jwt-go"
 	"auth"
+	"supabase"
 )
 
 type server struct{}
@@ -46,6 +47,9 @@ func StartGRPCServer() {
 		fmt.Printf("failed to listen: %v", err)
 		return
 	}
+
+	supabaseClient := supabase.InitializeSupabase()
+	auth.SetSupabaseClient(supabaseClient)
 
 	s := grpc.NewServer(grpc.UnaryInterceptor(jwtAuthInterceptor))
 	RegisterGreeterServer(s, &server{})
