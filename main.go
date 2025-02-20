@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net"
 	"google.golang.org/grpc"
+	"grpc"
+	"auth"
 )
 
 func main() {
@@ -15,7 +17,7 @@ func main() {
 		return
 	}
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(grpc.UnaryInterceptor(grpc.jwtAuthInterceptor))
 	if err := s.Serve(lis); err != nil {
 		fmt.Printf("failed to serve: %v", err)
 	}
