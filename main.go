@@ -6,10 +6,22 @@ import (
 	"google.golang.org/grpc"
 	"grpc"
 	"auth"
+	"supabase"
+	"os"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	fmt.Println("Hello, World!")
+
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Printf("Error loading .env file: %v", err)
+		return
+	}
+
+	supabaseClient := supabase.InitializeSupabase()
+	auth.SetSupabaseClient(supabaseClient)
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
